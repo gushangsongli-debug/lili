@@ -8,67 +8,63 @@
 </head>
 <body>
 
-    <!-- 1. 桌面区域 -->
-    <div class="desktop" id="desktop">
-        <!-- 32个格子将由 JS 动态生成 -->
+    <!-- ========== 桌面 ========== -->
+    <div class="desktop" id="desktop"></div>
+
+    <!-- ========== 身份软件（浏览器风格） ========== -->
+    <div class="app-window" id="window-identity" style="display:none;">
+        <!-- 浏览器顶栏 -->
+        <div class="browser-bar">
+            <div class="browser-dots">
+                <span class="dot red" id="identity-close"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+            <div class="browser-address">
+                <span class="address-text">shenfen</span>
+            </div>
+        </div>
+        <!-- 浏览器内容区 -->
+        <div class="browser-body" id="identity-body">
+            <!-- 拍立得卡片列表 -->
+            <div class="polaroid-list" id="polaroid-list"></div>
+            <!-- 添加按钮（黑色加号） -->
+            <div class="add-btn" id="identity-add-btn">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </div>
+        </div>
     </div>
 
-    <!-- 2. 应用运行窗口 -->
-    <div class="app-window" id="app-window">
-        
-        <!-- 浏览器风格头部 -->
-        <div class="browser-header">
-            <button class="btn-nav" id="btn-close-app">
-                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><polyline points="15 18 9 12 15 6"></polyline></svg>
-            </button>
-            <div class="browser-url" id="browser-url"></div>
-            <button class="btn-nav">
-                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
-            </button>
-        </div>
-
-        <!-- 应用内容容器 -->
-        <div class="app-content" id="app-content">
-            
-            <!-- ================= 身份 (Identity) 软件界面 ================= -->
-            <div id="view-app-identity" class="app-view">
-                <div class="identity-container">
-                    
-                    <!-- 表单区域 (去掉了大字标题) -->
-                    <div class="form-card">
-                        <div class="form-group">
-                            <label>头像 (本地导入)</label>
-                            <div class="file-upload-wrapper">
-                                <input type="file" id="input-avatar-file" accept="image/*" hidden>
-                                <label for="input-avatar-file" class="btn-upload">选择图片</label>
-                                <span id="file-name-display" class="file-name">未选择文件</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>名字</label>
-                            <input type="text" id="input-name" placeholder="输入角色名字">
-                        </div>
-                        <div class="form-group">
-                            <label>唯一 ID</label>
-                            <input type="text" id="input-id" placeholder="例如: @cyber_girl_01">
-                        </div>
-                        <div class="form-group">
-                            <label>人设与背景</label>
-                            <textarea id="input-persona" rows="3" placeholder="描述这个角色的性格、背景..."></textarea>
-                        </div>
-                        <!-- 纯黑色的添加按钮 -->
-                        <button class="btn-black" id="btn-add-identity">添加人设</button>
-                    </div>
-
-                    <!-- 拍立得展示画廊 (支持多个人设) -->
-                    <div id="polaroid-gallery" class="polaroid-gallery">
-                        <!-- 动态生成的拍立得卡片会放在这里 -->
-                    </div>
-
+    <!-- ========== 添加人设表单弹窗 ========== -->
+    <div class="form-overlay" id="identity-form-overlay" style="display:none;">
+        <div class="form-card">
+            <div class="form-title">新建人设</div>
+            <!-- 头像上传 -->
+            <div class="avatar-upload" id="avatar-upload">
+                <input type="file" accept="image/*" id="avatar-input" hidden>
+                <div class="avatar-preview" id="avatar-preview">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 </div>
+                <span class="avatar-hint">点击上传头像</span>
             </div>
-            <!-- 其他软件的界面后续会加在这里 -->
-
+            <!-- 表单字段 -->
+            <div class="form-group">
+                <label>名字</label>
+                <input type="text" id="form-name" placeholder="输入角色名字">
+            </div>
+            <div class="form-group">
+                <label>ID</label>
+                <input type="text" id="form-id" placeholder="输入唯一ID">
+            </div>
+            <div class="form-group">
+                <label>人设</label>
+                <textarea id="form-persona" placeholder="描述这个角色的性格、背景..."></textarea>
+            </div>
+            <!-- 按钮 -->
+            <div class="form-actions">
+                <button class="btn-cancel" id="form-cancel">取消</button>
+                <button class="btn-save" id="form-save">保存</button>
+            </div>
         </div>
     </div>
 

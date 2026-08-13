@@ -3,18 +3,17 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    user-select: none; 
+    user-select: none;
     -webkit-user-select: none;
-    -webkit-tap-highlight-color: transparent; 
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
     background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    overflow: hidden; 
+    overflow: hidden;
     width: 100vw;
     height: 100vh;
-    position: relative;
 }
 
 /* ================= 桌面网格布局 ================= */
@@ -24,7 +23,7 @@ body {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(8, 1fr);
-    padding: 40px 15px 20px 15px; 
+    padding: 40px 15px 20px 15px;
     gap: 10px;
 }
 
@@ -45,10 +44,12 @@ body {
     width: 72px;
     height: 88px;
     cursor: grab;
-    touch-action: none; 
+    touch-action: none;
 }
 
-.app-icon:active { cursor: grabbing; }
+.app-icon:active {
+    cursor: grabbing;
+}
 
 .icon-box {
     width: 54px;
@@ -66,7 +67,9 @@ body {
     transition: transform 0.2s ease;
 }
 
-.app-icon:hover .icon-box { transform: scale(1.05); }
+.app-icon:hover .icon-box {
+    transform: scale(1.05);
+}
 
 .icon-box svg {
     width: 100%;
@@ -85,218 +88,329 @@ body {
     text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
     text-align: center;
     font-weight: 500;
+    letter-spacing: 0.5px;
 }
 
-/* ================= 应用运行窗口 ================= */
+/* ================= 浏览器风格窗口（身份软件） ================= */
 .app-window {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #f4f5f7; /* 稍微带点灰的背景，凸显拍立得 */
-    z-index: 2000;
+    background: #f5f5f5;
+    z-index: 500;
     display: flex;
     flex-direction: column;
-    transform: translateY(100%);
-    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    animation: slideUp 0.3s ease;
 }
 
-.app-window.active {
-    transform: translateY(0);
+@keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
 }
 
-/* 浏览器风格头部 */
-.browser-header {
-    height: 50px;
-    background-color: #ffffff;
-    border-bottom: 1px solid #e0e0e0;
+/* 浏览器顶栏 */
+.browser-bar {
+    width: 100%;
+    height: 44px;
+    background: #e8e8e8;
     display: flex;
     align-items: center;
-    padding: 0 10px;
+    padding: 0 12px;
     gap: 10px;
-    padding-top: env(safe-area-inset-top, 10px); 
+    border-bottom: 1px solid #d5d5d5;
+    flex-shrink: 0;
 }
 
-.btn-nav {
-    background: none;
-    border: none;
-    width: 36px;
-    height: 36px;
+.browser-dots {
+    display: flex;
+    gap: 6px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.dot.red { background: #ff5f57; }
+.dot.yellow { background: #ffbd2e; }
+.dot.green { background: #28c840; }
+
+.browser-address {
+    flex: 1;
+    background: #fff;
+    border-radius: 6px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+}
+
+.address-text {
+    font-size: 13px;
+    color: #555;
+    letter-spacing: 0.5px;
+}
+
+/* 浏览器内容区 */
+.browser-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ================= 拍立得卡片样式 ================= */
+.polaroid-list {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.polaroid-card {
+    width: 140px;
+    background: #fff;
+    border-radius: 4px;
+    padding: 10px 10px 16px 10px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s;
+}
+
+.polaroid-card:hover {
+    transform: rotate(-2deg) scale(1.03);
+}
+
+.polaroid-avatar {
+    width: 120px;
+    height: 120px;
+    background: #eee;
+    border-radius: 2px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.polaroid-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.polaroid-avatar svg {
+    width: 50px;
+    height: 50px;
+    stroke: #bbb;
+    stroke-width: 1.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.polaroid-name {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+    font-weight: 600;
+    text-align: center;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ================= 添加按钮（黑色加号） ================= */
+.add-btn {
+    width: 50px;
+    height: 50px;
+    background: #222;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #333;
     cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    margin-top: 10px;
 }
-.btn-nav:active { background-color: #f0f0f0; }
 
-.browser-url {
-    flex: 1;
-    background-color: #f1f3f4;
-    height: 32px;
-    border-radius: 16px;
+.add-btn:hover {
+    transform: scale(1.1);
+    background: #000;
+}
+
+.add-btn svg {
+    width: 24px;
+    height: 24px;
+    stroke: #fff;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+}
+
+/* ================= 添加人设表单弹窗 ================= */
+.form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 600;
     display: flex;
-    align-items: center;
     justify-content: center;
-    font-size: 14px;
-    color: #333;
-    font-family: monospace;
-    font-weight: 500;
+    align-items: center;
+    animation: fadeIn 0.2s ease;
 }
-
-/* 应用内容区 */
-.app-content {
-    flex: 1;
-    overflow-y: auto;
-    position: relative;
-}
-
-.app-view {
-    display: none; 
-    padding: 20px;
-    animation: fadeIn 0.3s ease;
-}
-.app-view.active { display: block; }
 
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
 }
 
-/* ================= 身份软件专属样式 ================= */
-.identity-container {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
 .form-card {
+    width: 90%;
+    max-width: 360px;
     background: #fff;
-    padding: 20px;
     border-radius: 16px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-    margin-bottom: 30px;
+    padding: 24px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
+.form-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 头像上传 */
+.avatar-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 18px;
+    cursor: pointer;
+}
+
+.avatar-preview {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border: 2px dashed #ccc;
+    transition: border-color 0.2s;
+}
+
+.avatar-preview:hover {
+    border-color: #888;
+}
+
+.avatar-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-preview svg {
+    width: 36px;
+    height: 36px;
+    stroke: #bbb;
+    stroke-width: 1.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.avatar-hint {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #999;
+}
+
+/* 表单字段 */
 .form-group {
-    margin-bottom: 16px;
+    margin-bottom: 14px;
 }
 
 .form-group label {
     display: block;
     font-size: 13px;
-    color: #666;
-    margin-bottom: 8px;
-    font-weight: bold;
+    color: #555;
+    margin-bottom: 4px;
+    font-weight: 500;
 }
 
-.form-group input[type="text"], .form-group textarea {
+.form-group input,
+.form-group textarea {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #e0e0e0;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 14px;
-    background-color: #fafafa;
     outline: none;
     transition: border-color 0.2s;
-    user-select: text; 
-    -webkit-user-select: text;
+    font-family: inherit;
 }
 
-.form-group input:focus, .form-group textarea:focus {
-    border-color: #333;
-    background-color: #fff;
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #7c4dff;
 }
 
-/* 文件上传样式 */
-.file-upload-wrapper {
+.form-group textarea {
+    height: 80px;
+    resize: none;
+}
+
+/* 按钮 */
+.form-actions {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    gap: 12px;
+    margin-top: 18px;
 }
 
-.btn-upload {
-    background-color: #f0f0f0;
-    color: #333;
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-size: 13px;
-    cursor: pointer;
-    border: 1px solid #ddd;
-    transition: background 0.2s;
-}
-.btn-upload:active { background-color: #e0e0e0; }
-
-.file-name {
-    font-size: 12px;
-    color: #888;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 150px;
-}
-
-/* 纯黑添加按钮 */
-.btn-black {
-    width: 100%;
-    padding: 14px;
-    background-color: #000000;
-    color: #ffffff;
+.btn-cancel,
+.btn-save {
+    flex: 1;
+    padding: 10px;
     border: none;
     border-radius: 8px;
-    font-size: 15px;
-    font-weight: bold;
+    font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
-    margin-top: 10px;
-    transition: transform 0.1s;
-}
-.btn-black:active { transform: scale(0.98); }
-
-/* ================= 拍立得画廊样式 ================= */
-.polaroid-gallery {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    padding-bottom: 40px;
+    transition: background 0.2s;
 }
 
-.polaroid-card {
-    background: #ffffff;
-    padding: 10px 10px 35px 10px; /* 底部留白写名字 */
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    width: 140px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
+.btn-cancel {
+    background: #f0f0f0;
+    color: #555;
 }
 
-.polaroid-card:hover {
-    transform: scale(1.05) rotate(0deg) !important; /* 悬浮时摆正并放大 */
-    box-shadow: 0 12px 25px rgba(0,0,0,0.2);
-    z-index: 10;
+.btn-cancel:hover {
+    background: #e0e0e0;
 }
 
-.polaroid-img {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    background-color: #eee;
-    border: 1px solid #f0f0f0;
+.btn-save {
+    background: #222;
+    color: #fff;
 }
 
-.polaroid-name {
-    margin-top: 15px;
-    font-size: 16px;
-    color: #222;
-    font-family: "Comic Sans MS", "Bradley Hand", cursive, sans-serif; /* 手写体风格 */
-    font-weight: bold;
-    text-align: center;
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.btn-save:hover {
+    background: #000;
 }
