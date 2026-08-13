@@ -8,62 +8,72 @@
 </head>
 <body>
 
-    <!-- ========== 桌面 ========== -->
+    <!-- 桌面容器 -->
     <div class="desktop" id="desktop"></div>
 
-    <!-- ========== 身份软件（浏览器风格） ========== -->
-    <div class="app-window" id="window-identity" style="display:none;">
+    <!-- 身份软件页面（浏览器风格） -->
+    <div class="app-page" id="page-identity">
         <!-- 浏览器顶栏 -->
         <div class="browser-bar">
-            <div class="browser-dots">
-                <span class="dot red" id="identity-close"></span>
-                <span class="dot yellow"></span>
-                <span class="dot green"></span>
+            <div class="browser-controls">
+                <span class="dot dot-red" id="identity-close"></span>
+                <span class="dot dot-yellow"></span>
+                <span class="dot dot-green"></span>
             </div>
-            <div class="browser-address">
-                <span class="address-text">shenfen</span>
+            <div class="browser-url">
+                <span class="url-icon">🔒</span>
+                <span class="url-text">shenfen</span>
             </div>
-        </div>
-        <!-- 浏览器内容区 -->
-        <div class="browser-body" id="identity-body">
-            <!-- 拍立得卡片列表 -->
-            <div class="polaroid-list" id="polaroid-list"></div>
-            <!-- 添加按钮（黑色加号） -->
-            <div class="add-btn" id="identity-add-btn">
-                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <div class="browser-actions">
+                <button class="add-btn" id="identity-add-btn">＋</button>
             </div>
         </div>
-    </div>
 
-    <!-- ========== 添加人设表单弹窗 ========== -->
-    <div class="form-overlay" id="identity-form-overlay" style="display:none;">
-        <div class="form-card">
-            <div class="form-title">新建人设</div>
-            <!-- 头像上传 -->
-            <div class="avatar-upload" id="avatar-upload">
-                <input type="file" accept="image/*" id="avatar-input" hidden>
-                <div class="avatar-preview" id="avatar-preview">
-                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        <!-- 身份内容区域 -->
+        <div class="browser-content" id="identity-content">
+            <!-- 人设卡片列表 -->
+            <div class="identity-list" id="identity-list">
+                <!-- 动态生成的拍立得卡片 -->
+            </div>
+        </div>
+
+        <!-- 编辑弹窗 -->
+        <div class="modal-overlay" id="identity-modal">
+            <div class="modal-box">
+                <div class="modal-header">
+                    <span class="modal-title">新建人设</span>
+                    <button class="modal-close-btn" id="modal-close-btn">✕</button>
                 </div>
-                <span class="avatar-hint">点击上传头像</span>
-            </div>
-            <!-- 表单字段 -->
-            <div class="form-group">
-                <label>名字</label>
-                <input type="text" id="form-name" placeholder="输入角色名字">
-            </div>
-            <div class="form-group">
-                <label>ID</label>
-                <input type="text" id="form-id" placeholder="输入唯一ID">
-            </div>
-            <div class="form-group">
-                <label>人设</label>
-                <textarea id="form-persona" placeholder="描述这个角色的性格、背景..."></textarea>
-            </div>
-            <!-- 按钮 -->
-            <div class="form-actions">
-                <button class="btn-cancel" id="form-cancel">取消</button>
-                <button class="btn-save" id="form-save">保存</button>
+                <div class="modal-body">
+                    <div class="avatar-upload" id="avatar-upload">
+                        <img src="" alt="" class="avatar-preview" id="avatar-preview">
+                        <div class="avatar-placeholder" id="avatar-placeholder">
+                            <svg viewBox="0 0 24 24" width="32" height="32" stroke="#999" fill="none" stroke-width="1.5">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                <polyline points="21 15 16 10 5 21"></polyline>
+                            </svg>
+                            <span>点击上传头像</span>
+                        </div>
+                        <input type="file" accept="image/*" id="avatar-input" hidden>
+                    </div>
+                    <div class="form-group">
+                        <label>名字</label>
+                        <input type="text" id="input-name" placeholder="输入角色名字">
+                    </div>
+                    <div class="form-group">
+                        <label>ID</label>
+                        <input type="text" id="input-id" placeholder="输入唯一ID">
+                    </div>
+                    <div class="form-group">
+                        <label>人设</label>
+                        <textarea id="input-persona" placeholder="输入角色人设描述..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-cancel" id="btn-cancel">取消</button>
+                    <button class="btn-save" id="btn-save">保存</button>
+                </div>
             </div>
         </div>
     </div>
