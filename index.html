@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AI 聊天小手机</title>
-    <!-- 引入外部 CSS 文件 -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,7 +13,7 @@
         <!-- 32个格子将由 JS 动态生成 -->
     </div>
 
-    <!-- 2. 应用运行窗口 (默认隐藏在屏幕下方) -->
+    <!-- 2. 应用运行窗口 (默认隐藏) -->
     <div class="app-window" id="app-window">
         
         <!-- 浏览器风格头部 -->
@@ -22,7 +21,7 @@
             <button class="btn-nav" id="btn-close-app">
                 <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><polyline points="15 18 9 12 15 6"></polyline></svg>
             </button>
-            <div class="browser-url" id="browser-url">https://identity.app</div>
+            <div class="browser-url" id="browser-url">https://app.local</div>
             <button class="btn-nav">
                 <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
             </button>
@@ -31,47 +30,92 @@
         <!-- 应用内容容器 -->
         <div class="app-content" id="app-content">
             
-            <!-- ================= 身份 (Identity) 软件界面 ================= -->
+            <!-- ================= 身份 (Identity) 软件 ================= -->
             <div id="view-app-identity" class="app-view">
-                <div class="identity-container">
-                    <h2 class="page-title">创建新角色</h2>
-                    
-                    <!-- 表单区域 -->
-                    <div class="form-group">
-                        <label>头像 (图片URL)</label>
-                        <input type="text" id="input-avatar" placeholder="例如: https://example.com/avatar.jpg">
+                
+                <!-- 视图 A：身份列表页 -->
+                <div id="identity-list-view" class="identity-page active">
+                    <div class="page-header-flex">
+                        <h2 class="page-title">我的身份</h2>
+                        <button class="btn-icon" id="btn-go-create" title="新建身份">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        </button>
                     </div>
-                    <div class="form-group">
-                        <label>名字</label>
-                        <input type="text" id="input-name" placeholder="输入角色名字">
-                    </div>
-                    <div class="form-group">
-                        <label>唯一 ID</label>
-                        <input type="text" id="input-id" placeholder="例如: @cyber_girl_01">
-                    </div>
-                    <div class="form-group">
-                        <label>人设与背景</label>
-                        <textarea id="input-persona" rows="5" placeholder="详细描述这个角色的性格、说话方式、背景故事..."></textarea>
-                    </div>
-                    <button class="btn-primary" id="btn-save-identity">保存人设</button>
-
-                    <!-- 展示区域 (保存后显示) -->
-                    <div id="identity-card" class="identity-card" style="display: none;">
-                        <img id="display-avatar" src="" alt="头像" class="card-avatar">
-                        <div class="card-info">
-                            <h3 id="display-name">名字</h3>
-                            <span id="display-id" class="card-id">@id</span>
-                        </div>
-                        <p id="display-persona" class="card-persona">人设描述...</p>
+                    <!-- 列表容器 -->
+                    <div id="identity-list-container" class="identity-list">
+                        <!-- 动态生成的身份证将插入这里 -->
                     </div>
                 </div>
+
+                <!-- 视图 B：创建身份页 (表单) -->
+                <div id="identity-create-view" class="identity-page">
+                    <div class="page-header-flex">
+                        <button class="btn-text" id="btn-back-list">取消</button>
+                        <h2 class="page-title" style="margin:0;">录入信息</h2>
+                        <div style="width: 40px;"></div> <!-- 占位符以居中标题 -->
+                    </div>
+
+                    <div class="form-container">
+                        <!-- 头像上传区 -->
+                        <div class="avatar-upload-container">
+                            <div class="avatar-preview-box" id="avatar-preview-box">
+                                <span class="upload-text">+<br>上传照片</span>
+                                <img id="avatar-preview-img" src="" alt="" style="display: none;">
+                            </div>
+                            <input type="file" id="input-avatar-file" accept="image/png, image/jpeg, image/webp" class="hidden-file-input">
+                        </div>
+
+                        <!-- 表单字段 -->
+                        <div class="form-group row-group">
+                            <div class="half-width">
+                                <label>姓名</label>
+                                <input type="text" id="input-name" placeholder="真实姓名">
+                            </div>
+                            <div class="half-width">
+                                <label>性别</label>
+                                <select id="input-gender">
+                                    <option value="男">男</option>
+                                    <option value="女">女</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row-group">
+                            <div class="half-width">
+                                <label>民族</label>
+                                <input type="text" id="input-nation" placeholder="例如: 汉" value="汉">
+                            </div>
+                            <div class="half-width">
+                                <label>出生日期</label>
+                                <input type="date" id="input-birth">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>住址</label>
+                            <input type="text" id="input-address" placeholder="省市区详细地址">
+                        </div>
+
+                        <div class="form-group">
+                            <label>公民身份号码</label>
+                            <input type="text" id="input-idcard" placeholder="18位身份证号" maxlength="18">
+                        </div>
+
+                        <div class="form-group">
+                            <label>手机号 (选填)</label>
+                            <input type="tel" id="input-phone" placeholder="11位手机号码" maxlength="11">
+                        </div>
+
+                        <button class="btn-primary" id="btn-save-identity">生成身份证</button>
+                    </div>
+                </div>
+
             </div>
-            <!-- 其他软件的界面后续会加在这里 -->
+            <!-- 其他软件界面... -->
 
         </div>
     </div>
 
-    <!-- 引入外部 JS 文件 -->
     <script src="app.js"></script>
 </body>
 </html>
