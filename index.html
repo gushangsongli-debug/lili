@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AI 聊天小手机</title>
+    <!-- 引入外部 CSS 文件 -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 1. 桌面区域 -->
+    <div class="desktop" id="desktop">
+        <!-- 32个格子将由 JS 动态生成 -->
+    </div>
+
+    <!-- 2. 应用运行窗口 (默认隐藏在屏幕下方) -->
+    <div class="app-window" id="app-window">
+        
+        <!-- 浏览器风格头部 -->
+        <div class="browser-header">
+            <button class="btn-nav" id="btn-close-app">
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <div class="browser-url" id="browser-url">https://identity.app</div>
+            <button class="btn-nav">
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+            </button>
+        </div>
+
+        <!-- 应用内容容器 -->
+        <div class="app-content" id="app-content">
+            
+            <!-- ================= 身份 (Identity) 软件界面 ================= -->
+            <div id="view-app-identity" class="app-view">
+                <div class="identity-container">
+                    <h2 class="page-title">创建新角色</h2>
+                    
+                    <!-- 表单区域 -->
+                    <div class="form-group">
+                        <label>头像 (图片URL)</label>
+                        <input type="text" id="input-avatar" placeholder="例如: https://example.com/avatar.jpg">
+                    </div>
+                    <div class="form-group">
+                        <label>名字</label>
+                        <input type="text" id="input-name" placeholder="输入角色名字">
+                    </div>
+                    <div class="form-group">
+                        <label>唯一 ID</label>
+                        <input type="text" id="input-id" placeholder="例如: @cyber_girl_01">
+                    </div>
+                    <div class="form-group">
+                        <label>人设与背景</label>
+                        <textarea id="input-persona" rows="5" placeholder="详细描述这个角色的性格、说话方式、背景故事..."></textarea>
+                    </div>
+                    <button class="btn-primary" id="btn-save-identity">保存人设</button>
+
+                    <!-- 展示区域 (保存后显示) -->
+                    <div id="identity-card" class="identity-card" style="display: none;">
+                        <img id="display-avatar" src="" alt="头像" class="card-avatar">
+                        <div class="card-info">
+                            <h3 id="display-name">名字</h3>
+                            <span id="display-id" class="card-id">@id</span>
+                        </div>
+                        <p id="display-persona" class="card-persona">人设描述...</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 其他软件的界面后续会加在这里 -->
+
+        </div>
+    </div>
+
+    <!-- 引入外部 JS 文件 -->
+    <script src="app.js"></script>
+</body>
+</html>
