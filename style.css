@@ -1,0 +1,261 @@
+/* ================= 基础重置 ================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none; 
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent; 
+}
+
+body {
+    background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    overflow: hidden; 
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+/* ================= 桌面网格布局 ================= */
+.desktop {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    padding: 40px 15px 20px 15px; 
+    gap: 10px;
+}
+
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* ================= 软件图标样式 ================= */
+.app-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 88px;
+    cursor: grab;
+    touch-action: none; 
+}
+
+.app-icon:active { cursor: grabbing; }
+
+.icon-box {
+    width: 54px;
+    height: 54px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 14px;
+    padding: 12px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
+.app-icon:hover .icon-box { transform: scale(1.05); }
+
+.icon-box svg {
+    width: 100%;
+    height: 100%;
+    stroke: #2c3e50;
+    stroke-width: 1.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.app-name {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #333;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+    text-align: center;
+    font-weight: 500;
+}
+
+/* ================= 应用运行窗口 (全屏覆盖) ================= */
+.app-window {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f8f9fa;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    /* 默认隐藏在屏幕下方，通过 transform 实现丝滑弹出 */
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.app-window.active {
+    transform: translateY(0);
+}
+
+/* 浏览器风格头部 */
+.browser-header {
+    height: 50px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 10px;
+    padding-top: env(safe-area-inset-top, 10px); /* 适配刘海屏 */
+}
+
+.btn-nav {
+    background: none;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+    cursor: pointer;
+}
+.btn-nav:active { background-color: #f0f0f0; }
+
+.browser-url {
+    flex: 1;
+    background-color: #f1f3f4;
+    height: 32px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: #5f6368;
+    font-family: monospace;
+}
+
+/* 应用内容区 */
+.app-content {
+    flex: 1;
+    overflow-y: auto;
+    position: relative;
+}
+
+.app-view {
+    display: none; /* 默认隐藏所有软件界面 */
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+}
+.app-view.active { display: block; }
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ================= 身份软件专属样式 ================= */
+.identity-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.page-title {
+    font-size: 22px;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 15px;
+    background-color: #fff;
+    outline: none;
+    transition: border-color 0.2s;
+    /* 允许在输入框内选中文本 */
+    user-select: text; 
+    -webkit-user-select: text;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    border-color: #8ec5fc;
+    box-shadow: 0 0 0 3px rgba(142, 197, 252, 0.2);
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.btn-primary:active { opacity: 0.9; }
+
+/* 人设展示卡片 */
+.identity-card {
+    margin-top: 30px;
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border: 1px solid #eee;
+}
+
+.card-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #f0f0f0;
+    margin-bottom: 12px;
+    border: 2px solid #e0c3fc;
+}
+
+.card-info h3 { font-size: 20px; color: #333; margin-bottom: 4px; }
+.card-id { font-size: 13px; color: #888; font-family: monospace; }
+.card-persona {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+    text-align: left;
+    width: 100%;
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+}
